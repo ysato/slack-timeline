@@ -20,7 +20,7 @@ export SLACK_SIGNING_SECRET=<your-signing-secret>
 
 ```zsh
 # Clone this project onto your machine
-git clone https://github.com/slackapi/bolt-js-getting-started-app.git
+git clone https://github.com/ysato/bolt-js-getting-started-app.git
 
 # Change into the project
 cd bolt-js-getting-started-app/
@@ -35,22 +35,15 @@ npm install
 
 ```zsh
 npm run ngrok
-npm run start
+npm run local
 ```
 
-## Contributing
+## Deploy
 
-### Issues and questions
-
-Found a bug or have a question about this project? We'd love to hear from you!
-
-1. Browse to [slackapi/bolt-js/issues][4]
-1. Create a new issue
-1. Select the `[x] examples` category
-
-See you there and thanks for helping to improve Bolt for everyone!
+```zsh
+npx serverless deploy
+```
 
 [1]: https://slack.dev/bolt-js/tutorial/getting-started
 [2]: https://slack.dev/bolt-js/
 [3]: https://slack.dev/bolt-js/tutorial/getting-started#setting-up-events
-[4]: https://github.com/slackapi/bolt-js/issues/new
