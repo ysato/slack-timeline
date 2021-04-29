@@ -20,10 +20,10 @@ export SLACK_SIGNING_SECRET=<your-signing-secret>
 
 ```zsh
 # Clone this project onto your machine
-git clone https://github.com/ysato/bolt-js-getting-started-app.git
+git clone https://github.com/ysato/slack-timeline.git
 
 # Change into the project
-cd bolt-js-getting-started-app/
+cd slack-timeline/
 
 # Install the dependencies
 npm install

@@ -1,4 +1,4 @@
-service: serverless-bolt-js
+service: slack-timeline
 
 frameworkVersion: '2'
 
@@ -8,6 +8,7 @@ provider:
   environment:
     SLACK_SIGNING_SECRET: ${env:SLACK_SIGNING_SECRET}
     SLACK_BOT_TOKEN: ${env:SLACK_BOT_TOKEN}
+    CHANNEL_TO_NOTIFY: ${env:CHANNEL_TO_NOTIFY}
 
 functions:
   slack:

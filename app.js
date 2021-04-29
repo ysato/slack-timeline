@@ -12,37 +12,65 @@ const app = new App({
   receiver: expressReceiver
 });
 
-// Listens to incoming messages that contain "hello"
-app.message('hello', async ({ message, say }) => {
-  // say() sends a message to the channel where the event was triggered
-  await say({
-    blocks: [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `Hey there <@${message.user}>!`
-        },
-        "accessory": {
-          "type": "button",
-          "text": {
-            "type": "plain_text",
-            "text": "Click Me"
-          },
-          "action_id": "button_click"
-        }
-      }
-    ],
-    text: `Hey there <@${message.user}>!`
-  });
-});
+app.event('message', async ({ event, client }) => {
+  if (event.channel_type !== 'channel') {
+    return;
+  }
 
-app.action('button_click', async ({ body, ack, say }) => {
-  // Acknowledge the action
-  await ack();
-  await say(`<@${body.user.id}> clicked the button`);
+  if (!!event.bot_id) {
+    return;
+  }
+
+  if (!!event.thread_ts) {
+    return;
+  }
+
+  if (!!event.subtype && event.subtype !== 'file_share') {
+    return;
+  }
+
+  let result_1;
+  try {
+    result_1 = await client.conversations.info({
+      channel: event.channel,
+      include_locale: false
+    });
+  } catch (error) {
+    console.log(error);
+
+    throw new Error('Failed get conversations information.');
+  }
+
+  if (result_1.channel.name.indexOf('times-') !== 0) {
+    return;
+  }
+
+  let result_2;
+  try {
+    result_2 = await client.chat.getPermalink({
+      channel: event.channel,
+      message_ts: event.ts
+    });
+  } catch (error) {
+    console.log(error);
+
+    throw new Error('Failed getting a message permalink.');
+  }
+
+  try {
+    await client.chat.postMessage({
+      channel: process.env.CHANNEL_TO_NOTIFY,
+      text: result_2.permalink,
+      unfurl_links: true,
+      unfurl_media: true
+    });
+  } catch (error) {
+    console.log(error);
+
+    throw new Error('Failed posting a message.')
+  }
 });
 
 module.exports.handler = serverlessExpress({
-    app: expressReceiver.app
+  app: expressReceiver.app
 });

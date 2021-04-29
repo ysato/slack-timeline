@@ -1,7 +1,6 @@
 {
-  "name": "bolt-js-getting-started-app",
+  "name": "slack-timeline",
   "version": "1.0.0",
-  "description": "Getting Started ⚡️ Bolt for JavaScript",
   "main": "app.js",
   "scripts": {
     "ngrok": "ngrok http 3000",
